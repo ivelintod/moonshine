@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import BeerModel
+from . import models
+
 
 class BeerAdmin(admin.ModelAdmin):
 
@@ -8,7 +9,17 @@ class BeerAdmin(admin.ModelAdmin):
         'name',
         'beer_type',
         'description',
-        ]
+    ]
 
 
-admin.site.register(BeerModel, BeerAdmin)
+class WhiskeyAdmin(admin.ModelAdmin):
+
+    fields = [
+        'name',
+        'whiskey_type',
+        'description'
+    ]
+
+
+admin.site.register(models.BeerModel, BeerAdmin)
+admin.site.register(models.WhiskeyModel, WhiskeyAdmin)

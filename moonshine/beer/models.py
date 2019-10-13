@@ -1,9 +1,15 @@
 from django.db import models
 
-# Create your models here.
+
+class AlcoholModelMixin(models.Model):
+    class Meta:
+        abstract = True
+
+    name = models.CharField(max_length=50, blank=True, null=True)
+    description = models.CharField(max_length=500, blank=True, null=True)
 
 
-class BeerModel(models.Model):
+class BeerModel(AlcoholModelMixin, models.Model):
 
     class Meta:
         verbose_name_plural = "Beers"
@@ -22,5 +28,20 @@ class BeerModel(models.Model):
         choices=BEER_TYPE_CHOICES,
         default='LA')
 
-    name = models.CharField(max_length=50, blank=True, null=True)
-    description = models.CharField(max_length=500, blank=True, null=True)
+
+class WhiskeyModel(AlcoholModelMixin, models.Model):
+
+    WHISKEY_CHOICES = (
+        ('BR', 'Bourbon'),
+        ('CN', 'Corn'),
+        ('GR', 'Grain')
+    )
+
+    whiskey_type = models.CharField(
+        max_length=2,
+        choices=WHISKEY_CHOICES,
+        default='BR'
+    )
+
+    def __str__(self):
+        return self.name
